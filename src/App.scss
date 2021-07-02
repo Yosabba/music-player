@@ -1,3 +1,19 @@
 * {
-    background-color: rgb(212, 78, 78);
+    background-color: white;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
+
+@mixin flex {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: no-wrap;
+    
+}
+
+
+@import "./Song";
+@import "./Player";
