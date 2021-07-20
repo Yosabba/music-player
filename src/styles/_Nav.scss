@@ -1,0 +1,14 @@
+header {
+    @include flexNav;
+    text-transform: capitalize;
+    
+    svg {
+        width: 5%;
+        margin: 1rem;
+        align-self: center;
+        cursor: pointer;
+
+
+    }
+
+}

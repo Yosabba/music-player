@@ -1,0 +1,23 @@
+.song {
+    @include flex;
+    margin-top: 2rem;
+    margin-bottom: 5rem;
+
+
+    img {
+        width: 20%;
+        border-radius: 50%;
+    }
+    
+    h1 {
+        padding: 1rem;
+    }
+
+    h2 {
+        padding: 1rem;
+    }
+
+    h3 {
+        padding: 1rem;
+    }
+}
