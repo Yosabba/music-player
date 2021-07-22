@@ -3,13 +3,12 @@ import React from 'react';
 
 const Song = ({ currentSong }) => {
     return (
-        <div className="song">
+        <section className="song">
             <img src={currentSong.cover} alt="" />
-            <h1>Artist</h1>
+            <h1>{currentSong.name}</h1>
+            <h2>Artist</h2>
             <p>{currentSong.artist}</p>
-            <h2>Song</h2>
-            <p>{currentSong.name}</p>
-        </div>
+        </section>
 
     );
 }

@@ -1,31 +1,70 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faStop, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faPlayCircle, faPauseCircle, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 
 
-const Player = ({ currentSong, isPlaying, setIsPlaying }) => {
+const Player = ({ setSong ,songs, setCurrentSong, currentSong, isPlaying, setIsPlaying, songRef }) => {
 
-    const songRef = useRef(null);
 
     const [songInfo,setSongInfo] = useState({
         currentTime: 0,
         duration: 0,
-    })
+    }) 
 
-    function formatTime(time) {
+
+    const newSongs = songs.map((song) => {
+        if(song.id === songs.id){
+            return {
+                ...song, active: true,
+            }
+        } else {
+            return {
+                ...song, active: false,
+            }
+        }
+    });
+
+    const formatTime = time => {
         return (
             Math.floor(time / 60) + ":" + ("0" + Math.floor(time % 60)).slice(-2)
         );
     }
 
-    function dragHandler(e) {
+    const dragHandler = e => {
         songRef.current.currentTime = e.target.value
         setSongInfo({...songInfo, currentTime: e.target.value})
 
     }
 
-    function handleClick() {
+    const activeLibraryHandler = (nextPrev) => {
+
+        const newSongs = songs.map((song) => {
+            if(song.id === nextPrev.id){
+                return {
+                    ...song, active: true,
+                }
+            } else {
+                return {
+                    ...song, active: false,
+                }
+            }
+        });
+
+        setSong(newSongs)
+
+        if (isPlaying) {
+            const isplayProm = songRef.current.play();
+
+            if (isplayProm !== undefined) {
+                isplayProm.then((audio) => {
+                    songRef.current.play();
+                });
+            }
+        }
+    }
+
+    const handleClick = () => {
 
         if (!isPlaying) {
 
@@ -36,6 +75,38 @@ const Player = ({ currentSong, isPlaying, setIsPlaying }) => {
             songRef.current.pause();
             setIsPlaying(!isPlaying);
         }
+
+        setSong(newSongs)
+
+    }
+
+    const songEndHandler = async () => {
+        const x = songs.findIndex((ind) => ind.id === currentSong.id)
+        await setCurrentSong(songs[x + 1] || songs[0])
+
+        songRef.current.play()
+        
+    }
+
+    const changeSong = async direction => {
+
+        const songIndex = songs.findIndex((ind) => ind.id === currentSong.id)
+        
+        if (direction === "skip"){
+            await setCurrentSong(songs[songIndex + 1] || songs[0])
+            activeLibraryHandler(songs[songIndex + 1] || songs[0])
+        }
+        
+        else if(direction === "back") {
+            await setCurrentSong(songs[songIndex - 1] || songs[songs.length - 1])
+            activeLibraryHandler(songs[songIndex - 1] || songs[songs.length - 1])
+
+        }
+
+        if(isPlaying) songRef.current.play()
+
+        
+        
     }
 
     const timeUpdate = (e) => {
@@ -46,41 +117,42 @@ const Player = ({ currentSong, isPlaying, setIsPlaying }) => {
 
 
     return (
-        <div className="player">
+        <section className="player">
 
             <div className="timecontrol"> 
                 <p>{formatTime(songInfo.currentTime)}</p>
 
                 <input 
                 min={0} 
-                max={songInfo.duration} 
+                max={songInfo.duration || 0} 
                 value={songInfo.currentTime} 
                 type="range" 
                 onChange={dragHandler}
                 />
 
-                <p>{formatTime(songInfo.duration)}</p>
+                <p>{songInfo.duration ? formatTime(songInfo.duration) : "0:00"}</p>
                 
             </div>
 
-            <div>
-                <FontAwesomeIcon icon={faChevronLeft} />
-                <FontAwesomeIcon className="play" icon={isPlaying ? faStop: faPlay} onClick={handleClick} />
-                <FontAwesomeIcon icon={faChevronRight} />
+            <div className="icon-container">
+                <FontAwesomeIcon onClick={() => changeSong("back")} icon={faChevronLeft} size="2x" />
+                <FontAwesomeIcon 
+                className="play-pause" 
+                icon={isPlaying ? faPauseCircle: faPlayCircle} 
+                onClick={handleClick} 
+                size="2x" />
+                <FontAwesomeIcon icon={faChevronRight} onClick={() => changeSong("skip")} size="2x" />
             </div>
-    
-            
-            
-
 
             <audio 
             onTimeUpdate={timeUpdate} 
             ref={songRef} 
             src={currentSong.audio}
             onLoadedMetadata={timeUpdate}
+            onEnded={songEndHandler}
             ></audio>
 
-        </div>
+        </section>
 
     );
 }

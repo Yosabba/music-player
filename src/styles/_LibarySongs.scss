@@ -3,6 +3,18 @@
     margin-top: .5rem;
     margin-bottom: 1rem;
     border: .5px solid rgba(196, 196, 196, 0.404);
+    transition: all 0.3s ease-in;
+
+
+    .song-info {
+        h3 {
+            font-size: 1.2rem;
+        }
+
+        h4 {
+            font-size: .8rem;
+        }
+    }
 
     img {
         margin-top: .5rem;
@@ -11,4 +23,38 @@
     &:hover {
         background-color: blanchedalmond;
     }
+}
+
+.Libary-songs-active {
+    @include flex;
+    margin-top: .5rem;
+    margin-bottom: 1rem;
+    border: .5px solid rgba(196, 196, 196, 0.404);
+    background-color: blanchedalmond;
+
+    .song-info {
+        h3 {
+            font-size: 1.2rem;
+        }
+
+        h4 {
+            font-size: .8rem;
+        }
+    }
+
+    img {
+        margin-top: .5rem;
+    }
+
+    &:hover {
+        background-color: blanchedalmond;
+    }
+}
+
+@media screen and (max-width: 768px) {
+
+
+
+
+    
 }

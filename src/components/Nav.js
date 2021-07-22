@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faMusic } from '@fortawesome/free-solid-svg-icons';
 
 const Nav = ({ setShowLibary, showLibary }) => {
 
@@ -14,10 +14,13 @@ const Nav = ({ setShowLibary, showLibary }) => {
 
     return (
         <header>
-            <nav>
-                <FontAwesomeIcon icon={faBars} size="2x" onClick={handleClick}/>
-            </nav>
-            <h1>Library</h1>
+            <div></div>
+            <h1>Dom's Music Player</h1>
+            <button onClick={handleClick}>
+                Library 
+                <FontAwesomeIcon icon={faMusic} size="1x" />
+            </button>
+            
         </header>
     );
 }

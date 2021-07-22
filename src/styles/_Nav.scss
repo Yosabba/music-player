@@ -1,14 +1,79 @@
 header {
-    @include flexNav;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     text-transform: capitalize;
+    margin-top: 2%;
+    m
     
     svg {
-        width: 5%;
+        width: 2%;
         margin: 1rem;
         align-self: center;
         cursor: pointer;
-
+        white-space: nowrap;
+        margin-left: 1rem;
 
     }
+
+    button {
+        margin-top: 1rem;
+        margin-right: 1rem;
+        text-align: center;
+        cursor: pointer;
+        border: 2px solid black;
+        background-color: white;
+        padding: .5rem;
+        font-size: .9rem;
+        font-weight: 700; 
+        transition: all 0.4s ease-in;
+        white-space: nowrap;
+
+        &:hover {
+            background: rgb(65, 65, 65);
+            color: white;
+            padding: .9rem;
+        }
+    }
+
+    h1 {
+        margin-left: 42%;
+        width: 100%;
+    }
+
+}
+
+@media screen and (max-width: 768px) {
+
+    header {
+
+        h1 {
+            font-size: 1rem;
+            white-space: nowrap;
+            margin-left: 28%;
+        }
+
+        button {
+            white-space: nowrap;
+            padding: .3rem;
+            z-index: 10;
+            margin-left: 0%;
+            margin-top: 2%;
+            
+            &:hover {
+                padding: .3rem;
+            }
+
+        }
+
+        svg {
+            margin-left: .2rem;
+        }
+
+    }
+
+
+
+
 
 }
