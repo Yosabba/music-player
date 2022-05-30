@@ -16,11 +16,17 @@ header {
     font-weight: 700;
     transition: all 0.3s ease-in;
     border-radius: 0.5rem;
+    color: black;
 
     &:hover {
       background: rgb(0, 0, 0);
       color: white;
       transform: scale(1.1);
+
+      span {
+        font-weight: 700;
+        color: rgb(255, 255, 255);
+      }
     }
   }
 }
